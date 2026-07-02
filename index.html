@@ -6,9 +6,12 @@
     <title>🌿 Macha.go Content OS</title>
     <style>
         :root {
-            --matcha-dark: #5C7041;
-            --matcha-main: #7A9356;
-            --matcha-light: #EEF2E6;
+            /* Warna Khas Brand Macha.go */
+            --macha-main: #EA80A6;   /* Pink Utama */
+            --macha-accent: #F8E022; /* Kuning Aksen */
+            --macha-dark: #C95A82;   /* Pink Gelap untuk Judul */
+            --macha-light: #FDF0F4;  /* Pink Sangat Terang */
+            
             --text-dark: #2C3325;
             --text-gray: #6B7280;
             --bg-white: #FFFFFF;
@@ -31,7 +34,7 @@
             overflow: hidden;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Navigation */
         .sidebar {
             width: 280px;
             background-color: var(--bg-white);
@@ -45,7 +48,7 @@
         .brand {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--matcha-dark);
+            color: var(--macha-dark);
             margin-bottom: 32px;
             padding: 0 12px;
             display: flex;
@@ -73,12 +76,13 @@
         }
 
         .nav-item.active {
-            background-color: var(--matcha-light);
-            color: var(--matcha-dark);
+            background-color: var(--macha-light);
+            color: var(--macha-dark);
             font-weight: 600;
+            border-left: 4px solid var(--macha-main);
         }
 
-        /* Main Content Styling */
+        /* Main Content */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -101,9 +105,16 @@
         }
 
         h1 { font-size: 1.8rem; margin-bottom: 24px; color: var(--text-dark); }
-        h2 { font-size: 1.2rem; margin-bottom: 16px; color: var(--matcha-dark); border-bottom: 2px solid var(--matcha-light); padding-bottom: 8px;}
+        h2 { font-size: 1.2rem; margin-bottom: 16px; color: var(--macha-dark); border-bottom: 2px solid var(--macha-accent); padding-bottom: 8px;}
 
-        /* Dashboard Grid */
+        /* Efek saat teks diklik untuk diedit */
+        [contenteditable="true"]:focus {
+            outline: 2px dashed var(--macha-main);
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--bg-white);
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -115,7 +126,7 @@
             padding: 24px;
             border-radius: 12px;
             border: 1px solid var(--border);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 4px rgba(234, 128, 166, 0.05);
         }
 
         .checklist-item {
@@ -129,7 +140,7 @@
         input[type="checkbox"] {
             width: 18px;
             height: 18px;
-            accent-color: var(--matcha-main);
+            accent-color: var(--macha-main);
             cursor: pointer;
         }
 
@@ -139,6 +150,7 @@
             border-radius: 12px;
             border: 1px solid var(--border);
             overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(234, 128, 166, 0.05);
         }
 
         table {
@@ -154,8 +166,8 @@
         }
 
         th {
-            background-color: var(--matcha-light);
-            color: var(--matcha-dark);
+            background-color: var(--macha-light);
+            color: var(--macha-dark);
             font-weight: 600;
         }
 
@@ -170,7 +182,7 @@
         .badge.idea { background: #f3f4f6; color: #4b5563; }
         .badge.shooting { background: #fee2e2; color: #991b1b; }
         .badge.editing { background: #fef3c7; color: #92400e; }
-        .badge.uploaded { background: var(--matcha-light); color: var(--matcha-dark); }
+        .badge.uploaded { background: var(--macha-light); color: var(--macha-dark); }
 
         /* Kanban Board */
         .kanban-board {
@@ -206,7 +218,6 @@
             border: 1px solid var(--border);
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             font-size: 0.9rem;
-            cursor: pointer;
         }
 
         /* Library Grid */
@@ -222,18 +233,16 @@
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            cursor: pointer;
             transition: all 0.2s;
         }
 
         .folder:hover {
-            border-color: var(--matcha-main);
-            background: var(--matcha-light);
+            border-color: var(--macha-main);
+            background: var(--macha-light);
         }
 
         .folder-icon { font-size: 2rem; margin-bottom: 8px; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; padding: 12px; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--border); }
@@ -258,36 +267,39 @@
         <div class="nav-item" data-target="sop">📝 SOP & Formula</div>
     </nav>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
+    <!-- Main Content Area (Semua di dalam sini tersimpan otomatis saat kamu ketik) -->
+    <main class="main-content" id="editable-area">
 
         <!-- 1. DASHBOARD HQ -->
         <section id="dashboard" class="view-section active">
-            <h1>🌿 Matcha.Go Content HQ</h1>
+            <h1>🌿 Macha.go Content HQ</h1>
+            <p style="margin-bottom: 20px; color: var(--macha-dark); font-size: 0.85rem; background: var(--macha-light); padding: 10px 14px; border-radius: 8px; display: inline-block;">
+                💡 Tips: Klik teks, tabel, atau kartu mana saja untuk mengetik/mengedit. Data otomatis tersimpan di iPad kamu.
+            </p>
             <div class="dashboard-grid">
                 <div class="card">
                     <h2>📈 Goal Bulan Ini</h2>
-                    <label class="checklist-item"><input type="checkbox"> Upload 30 Video</label>
-                    <label class="checklist-item"><input type="checkbox"> 500 Followers Baru</label>
-                    <label class="checklist-item"><input type="checkbox"> 100K Views</label>
-                    <label class="checklist-item"><input type="checkbox"> 10 Video >2K Views</label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Upload 30 Video</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">500 Followers Baru</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">100K Views</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">10 Video >2K Views</span></label>
                 </div>
                 <div class="card">
                     <h2>📅 Today's Task</h2>
-                    <label class="checklist-item"><input type="checkbox"> 🎥 Shoot Day 03</label>
-                    <label class="checklist-item"><input type="checkbox"> ✂ Edit Day 02</label>
-                    <label class="checklist-item"><input type="checkbox"> 📝 Caption Day 02</label>
-                    <label class="checklist-item"><input type="checkbox"> 📤 Upload 18.30</label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">🎥 Shoot Day 03</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">✂ Edit Day 02</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">📝 Caption Day 02</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">📤 Upload 18.30</span></label>
                 </div>
                 <div class="card">
                     <h2>📌 Next Upload</h2>
-                    <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">Morning Routine</p>
-                    <span class="badge editing">Status: Editing</span>
+                    <p contenteditable="true" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">Morning Routine</p>
+                    <span class="badge editing" contenteditable="true">Status: Editing</span>
                 </div>
                 <div class="card">
                     <h2>🔥 Best Performing</h2>
-                    <p style="font-size: 1.1rem; font-weight: 500;">Day in My Life</p>
-                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-top: 4px;">45K Views • 320 Saves</p>
+                    <p contenteditable="true" style="font-size: 1.1rem; font-weight: 500;">Day in My Life</p>
+                    <p contenteditable="true" style="color: var(--text-gray); font-size: 0.9rem; margin-top: 4px;">45K Views • 320 Saves</p>
                 </div>
             </div>
         </section>
@@ -309,36 +321,36 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Morning Routine Barista</td>
-                            <td><span class="badge editing">✂ Editing</span></td>
-                            <td>Aesthetic / VLOG</td>
-                            <td>Tiktok, Reels</td>
-                            <td>12 Jul 2026</td>
-                            <td>Engagement</td>
+                            <td contenteditable="true">Morning Routine Barista</td>
+                            <td><span class="badge editing" contenteditable="true">✂ Editing</span></td>
+                            <td contenteditable="true">Aesthetic / VLOG</td>
+                            <td contenteditable="true">Tiktok, Reels</td>
+                            <td contenteditable="true">12 Jul 2026</td>
+                            <td contenteditable="true">Engagement</td>
                         </tr>
                         <tr>
-                            <td>Matcha Myth #1</td>
-                            <td><span class="badge shooting">🎥 Shooting</span></td>
-                            <td>Edukasi</td>
-                            <td>Tiktok</td>
-                            <td>14 Jul 2026</td>
-                            <td>Share & Save</td>
+                            <td contenteditable="true">Macha Myth #1</td>
+                            <td><span class="badge shooting" contenteditable="true">🎥 Shooting</span></td>
+                            <td contenteditable="true">Edukasi</td>
+                            <td contenteditable="true">Tiktok</td>
+                            <td contenteditable="true">14 Jul 2026</td>
+                            <td contenteditable="true">Share & Save</td>
                         </tr>
                         <tr>
-                            <td>Packing ASMR (Order 50 Pcs)</td>
-                            <td><span class="badge uploaded">✅ Uploaded</span></td>
-                            <td>Behind the Scene</td>
-                            <td>Reels</td>
-                            <td>10 Jul 2026</td>
-                            <td>Soft Selling</td>
+                            <td contenteditable="true">Packing ASMR (Order 50 Pcs)</td>
+                            <td><span class="badge uploaded" contenteditable="true">✅ Uploaded</span></td>
+                            <td contenteditable="true">Behind the Scene</td>
+                            <td contenteditable="true">Reels</td>
+                            <td contenteditable="true">10 Jul 2026</td>
+                            <td contenteditable="true">Soft Selling</td>
                         </tr>
                         <tr>
-                            <td>POV Mahasiswa Nugas</td>
-                            <td><span class="badge idea">🧠 Idea</span></td>
-                            <td>Relatable</td>
-                            <td>Tiktok</td>
-                            <td>TBD</td>
-                            <td>Traffic</td>
+                            <td contenteditable="true">+ Ketik ide baru di sini...</td>
+                            <td><span class="badge idea" contenteditable="true">🧠 Idea</span></td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -350,16 +362,17 @@
             <h1>💡 Content Brain Dump</h1>
             <div class="dashboard-grid">
                 <div class="card">
+                    <h2>🧠 Semua Ide Konten</h2>
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
-                        <li class="checklist-item">📌 POV Mahasiswa</li>
-                        <li class="checklist-item">📌 Morning Routine</li>
-                        <li class="checklist-item">📌 Matcha Myth</li>
-                        <li class="checklist-item">📌 Customer Story</li>
-                        <li class="checklist-item">📌 Packing ASMR</li>
-                        <li class="checklist-item">📌 Home Cafe</li>
-                        <li class="checklist-item">📌 Healthy Lifestyle</li>
-                        <li class="checklist-item">📌 Freelancer Life</li>
-                        <li class="checklist-item">📌 Weekend Reset</li>
+                        <li class="checklist-item">📌 <span contenteditable="true">POV Mahasiswa</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Morning Routine</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Macha Myth</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Customer Story</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Packing ASMR</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Home Cafe</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Healthy Lifestyle</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">Freelancer Life</span></li>
+                        <li class="checklist-item">📌 <span contenteditable="true">+ Klik di sini untuk ketik ide baru...</span></li>
                     </ul>
                 </div>
             </div>
@@ -370,24 +383,26 @@
             <h1>🎬 Production Board</h1>
             <div class="kanban-board">
                 <div class="kanban-col">
-                    <div class="kanban-col-title">📌 To Shoot <span>2</span></div>
-                    <div class="kanban-card">Matcha Myth #1<br><small style="color: gray;">Edukasi</small></div>
-                    <div class="kanban-card">Freelancer Life<br><small style="color: gray;">Vlog</small></div>
+                    <div class="kanban-col-title">📌 To Shoot</div>
+                    <div class="kanban-card" contenteditable="true">Macha Myth #1<br><small style="color: gray;">Edukasi</small></div>
+                    <div class="kanban-card" contenteditable="true">Freelancer Life<br><small style="color: gray;">Vlog</small></div>
+                    <div class="kanban-card" contenteditable="true" style="background: #fff9db;">+ Ketik shot list baru...</div>
                 </div>
                 <div class="kanban-col">
-                    <div class="kanban-col-title">🎥 Shot <span>1</span></div>
-                    <div class="kanban-card">POV Mahasiswa<br><small style="color: gray;">Relatable</small></div>
+                    <div class="kanban-col-title">🎥 Shot</div>
+                    <div class="kanban-card" contenteditable="true">POV Mahasiswa<br><small style="color: gray;">Relatable</small></div>
                 </div>
                 <div class="kanban-col">
-                    <div class="kanban-col-title">✂ Editing <span>1</span></div>
-                    <div class="kanban-card">Morning Routine Barista<br><small style="color: gray;">Aesthetic</small></div>
+                    <div class="kanban-col-title">✂ Editing</div>
+                    <div class="kanban-card" contenteditable="true">Morning Routine Barista<br><small style="color: gray;">Aesthetic</small></div>
                 </div>
                 <div class="kanban-col">
-                    <div class="kanban-col-title">🔍 Review <span>0</span></div>
+                    <div class="kanban-col-title">🔍 Review</div>
+                    <div class="kanban-card" contenteditable="true">- Kosong -</div>
                 </div>
                 <div class="kanban-col">
-                    <div class="kanban-col-title">✅ Done <span>1</span></div>
-                    <div class="kanban-card">Packing ASMR<br><small style="color: gray;">BTS</small></div>
+                    <div class="kanban-col-title">✅ Done</div>
+                    <div class="kanban-card" contenteditable="true">Packing ASMR<br><small style="color: gray;">BTS</small></div>
                 </div>
             </div>
         </section>
@@ -410,31 +425,31 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Morning Routine</td>
-                            <td>3.400</td>
-                            <td>12s</td>
-                            <td>80</td>
-                            <td>210</td>
-                            <td>40</td>
-                            <td>8/10</td>
+                            <td contenteditable="true">Morning Routine</td>
+                            <td contenteditable="true">3.400</td>
+                            <td contenteditable="true">12s</td>
+                            <td contenteditable="true">80</td>
+                            <td contenteditable="true">210</td>
+                            <td contenteditable="true">40</td>
+                            <td contenteditable="true">8/10</td>
                         </tr>
                         <tr>
-                            <td>Packing ASMR</td>
-                            <td>15.200</td>
-                            <td>24s</td>
-                            <td>150</td>
-                            <td>450</td>
-                            <td>120</td>
-                            <td>9/10</td>
+                            <td contenteditable="true">Packing ASMR</td>
+                            <td contenteditable="true">15.200</td>
+                            <td contenteditable="true">24s</td>
+                            <td contenteditable="true">150</td>
+                            <td contenteditable="true">450</td>
+                            <td contenteditable="true">120</td>
+                            <td contenteditable="true">9/10</td>
                         </tr>
                         <tr>
-                            <td>Healthy Lifestyle</td>
-                            <td>1.200</td>
-                            <td>8s</td>
-                            <td>12</td>
-                            <td>30</td>
-                            <td>5</td>
-                            <td>6/10</td>
+                            <td contenteditable="true">+ Ketik video baru...</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -443,16 +458,17 @@
 
         <!-- 6. CONTENT LIBRARY -->
         <section id="library" class="view-section">
-            <h1>📁 Content Library (Footage)</h1>
+            <h1>📁 Content Library (Footage Tracker)</h1>
+            <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 0.9rem;">Catat folder penyebaran *raw footage* kamu di sini supaya gampang ngingetnya:</p>
             <div class="library-grid">
-                <div class="folder"><div class="folder-icon">🌿</div>Matcha Pour</div>
-                <div class="folder"><div class="folder-icon">🍵</div>Whisk</div>
-                <div class="folder"><div class="folder-icon">🥛</div>Milk Pour</div>
-                <div class="folder"><div class="folder-icon">📦</div>Packing</div>
-                <div class="folder"><div class="folder-icon">💻</div>Laptop</div>
-                <div class="folder"><div class="folder-icon">📒</div>Planner</div>
-                <div class="folder"><div class="folder-icon">🪑</div>Cafe</div>
-                <div class="folder"><div class="folder-icon">🎬</div>B-roll</div>
+                <div class="folder"><div class="folder-icon">🌿</div><span contenteditable="true">Macha Pour</span></div>
+                <div class="folder"><div class="folder-icon">🍵</div><span contenteditable="true">Whisk</span></div>
+                <div class="folder"><div class="folder-icon">🥛</div><span contenteditable="true">Milk Pour</span></div>
+                <div class="folder"><div class="folder-icon">📦</div><span contenteditable="true">Packing</span></div>
+                <div class="folder"><div class="folder-icon">💻</div><span contenteditable="true">Laptop</span></div>
+                <div class="folder"><div class="folder-icon">📒</div><span contenteditable="true">Planner</span></div>
+                <div class="folder"><div class="folder-icon">🪑</div><span contenteditable="true">Cafe</span></div>
+                <div class="folder"><div class="folder-icon">🎬</div><span contenteditable="true">B-roll</span></div>
             </div>
         </section>
 
@@ -460,14 +476,13 @@
         <section id="campaign" class="view-section">
             <h1>🎯 Campaign & Launch</h1>
             <div class="dashboard-grid">
-                <div class="card" style="border-top: 4px solid var(--matcha-main);">
-                    <h2>🚀 Launching Menu Baru</h2>
-                    <p style="color: var(--text-gray); font-size: 0.9rem;">Target: Agustus 2026</p>
+                <div class="card" style="border-top: 4px solid var(--macha-main);">
+                    <h2 contenteditable="true">🚀 Launching Menu Baru</h2>
+                    <p contenteditable="true" style="color: var(--text-gray); font-size: 0.9rem;">Target: Agustus 2026</p>
                 </div>
-                <div class="card"><h2>🎓 Back to School</h2></div>
-                <div class="card"><h2>🇲🇨 17 Agustus</h2></div>
-                <div class="card"><h2>🍵 Hari Matcha</h2></div>
-                <div class="card"><h2>🎤 Workshop Offline</h2></div>
+                <div class="card"><h2 contenteditable="true">🎓 Back to School</h2><p contenteditable="true" style="color: var(--text-gray); font-size: 0.9rem;">Ide promo anak kuliah</p></div>
+                <div class="card"><h2 contenteditable="true">🇲🇨 17 Agustus</h2><p contenteditable="true" style="color: var(--text-gray); font-size: 0.9rem;">Diskon kemerdekaan</p></div>
+                <div class="card"><h2 contenteditable="true">🍵 Hari Macha</h2><p contenteditable="true" style="color: var(--text-gray); font-size: 0.9rem;">Event khusus komunitas</p></div>
             </div>
         </section>
 
@@ -479,34 +494,34 @@
                 <!-- Checklist SOP -->
                 <div class="card">
                     <h2>✅ Checklist Sebelum Upload</h2>
-                    <label class="checklist-item"><input type="checkbox"> Hook di 3 detik pertama kuat</label>
-                    <label class="checklist-item"><input type="checkbox"> Subtitle / Text On Screen</label>
-                    <label class="checklist-item"><input type="checkbox"> Cover / Thumbnail menarik</label>
-                    <label class="checklist-item"><input type="checkbox"> Call To Action (CTA) jelas</label>
-                    <label class="checklist-item"><input type="checkbox"> Hashtag relevan</label>
-                    <label class="checklist-item"><input type="checkbox"> SEO Keywords di caption</label>
-                    <label class="checklist-item"><input type="checkbox"> Pin Comment</label>
-                    <label class="checklist-item"><input type="checkbox"> Reply Comment awal</label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Hook di 3 detik pertama kuat</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Subtitle / Text On Screen</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Cover / Thumbnail menarik</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Call To Action (CTA) jelas</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Hashtag relevan</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">SEO Keywords di caption</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Pin Comment</span></label>
+                    <label class="checklist-item"><input type="checkbox"> <span contenteditable="true">Reply Comment awal</span></label>
                 </div>
 
                 <!-- Score Card -->
                 <div class="card">
                     <h2>🏆 Content Score Card</h2>
-                    <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 16px;">Evaluasi kualitas video setelah di-upload (Bukan feeling, tapi data).</p>
+                    <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 16px;">Evaluasi kualitas video setelah di-upload:</p>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>Hook</span> <span style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
+                        <span>Hook</span> <span contenteditable="true" style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>Retention</span> <span style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
+                        <span>Retention</span> <span contenteditable="true" style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>Visual</span> <span style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
+                        <span>Visual</span> <span contenteditable="true" style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>Story</span> <span style="color: #FBBF24;">⭐⭐⭐☆☆</span>
+                        <span>Story</span> <span contenteditable="true" style="color: #FBBF24;">⭐⭐⭐☆☆</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>CTA</span> <span style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
+                        <span>CTA</span> <span contenteditable="true" style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
                     </div>
                 </div>
 
@@ -526,22 +541,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>"Nobody sees this..."</td>
-                            <td>12x</td>
-                            <td>28.000</td>
-                            <td><span class="badge uploaded">🔥 Gacor</span></td>
+                            <td contenteditable="true">"Nobody sees this..."</td>
+                            <td contenteditable="true">12x</td>
+                            <td contenteditable="true">28.000</td>
+                            <td><span class="badge uploaded" contenteditable="true">🔥 Gacor</span></td>
                         </tr>
                         <tr>
-                            <td>"POV: [Situation]"</td>
-                            <td>8x</td>
-                            <td>35.000</td>
-                            <td><span class="badge uploaded">🔥 Gacor</span></td>
+                            <td contenteditable="true">"POV: [Situation]"</td>
+                            <td contenteditable="true">8x</td>
+                            <td contenteditable="true">35.000</td>
+                            <td><span class="badge uploaded" contenteditable="true">🔥 Gacor</span></td>
                         </tr>
                         <tr>
-                            <td>"Things I wish I knew..."</td>
-                            <td>5x</td>
-                            <td>17.000</td>
-                            <td><span class="badge idea">Stabil</span></td>
+                            <td contenteditable="true">+ Ketik hook baru...</td>
+                            <td contenteditable="true">-</td>
+                            <td contenteditable="true">-</td>
+                            <td><span class="badge idea" contenteditable="true">Tes</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -550,26 +565,52 @@
 
     </main>
 
-    <!-- JavaScript for Navigation -->
+    <!-- JavaScript Navigation & Auto-Save -->
     <script>
-        const navItems = document.querySelectorAll('.nav-item');
-        const viewSections = document.querySelectorAll('.view-section');
+        // 1. Load Data dari iPad terlebih dahulu
+        const editableArea = document.getElementById('editable-area');
+        const savedData = localStorage.getItem('machaOS_CompleteData');
+        if (savedData) {
+            editableArea.innerHTML = savedData;
+        }
 
+        // 2. Sistem Navigasi Tab
+        const navItems = document.querySelectorAll('.nav-item');
+        
         navItems.forEach(item => {
             item.addEventListener('click', () => {
-                // Remove active class from all nav items
                 navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active class to clicked nav item
                 item.classList.add('active');
                 
-                // Hide all sections
-                viewSections.forEach(section => section.classList.remove('active'));
+                // Cari ulang section di dalam DOM (karena mungkin sudah diubah localStorage)
+                document.querySelectorAll('.view-section').forEach(section => {
+                    section.classList.remove('active');
+                });
                 
-                // Show targeted section
                 const targetId = item.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) targetEl.classList.add('active');
+                
+                // Simpan state tab ke localStorage juga
+                localStorage.setItem('machaOS_CompleteData', editableArea.innerHTML);
             });
+        });
+
+        // 3. Auto-Save Setiap Kali Ada Ketikan
+        editableArea.addEventListener('input', () => {
+            localStorage.setItem('machaOS_CompleteData', editableArea.innerHTML);
+        });
+
+        // 4. Auto-Save Saat Klik Checkbox
+        editableArea.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                if (e.target.checked) {
+                    e.target.setAttribute('checked', 'checked');
+                } else {
+                    e.target.removeAttribute('checked');
+                }
+                localStorage.setItem('machaOS_CompleteData', editableArea.innerHTML);
+            }
         });
     </script>
 </body>
