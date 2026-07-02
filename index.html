@@ -3,649 +3,574 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 Matcha.Go Content OS</title>
+    <title>🌿 Macha.go Content OS</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --matcha-dark: #5C7041;
+            --matcha-main: #7A9356;
+            --matcha-light: #EEF2E6;
+            --text-dark: #2C3325;
+            --text-gray: #6B7280;
+            --bg-white: #FFFFFF;
+            --bg-gray: #F9FAFB;
+            --border: #E5E7EB;
         }
 
-        :root {
-            --primary: #6BA87D;
-            --primary-light: #A8D5BA;
-            --primary-dark: #4A7C59;
-            --bg: #FAFBF7;
-            --card-bg: #FFFFFF;
-            --text: #2D3D2D;
-            --text-light: #6B7B6B;
-            --border: #E8EDE5;
-            --accent: #D4A574;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        .nav-tabs {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            border-bottom: 2px solid var(--border);
-            padding: 0.5rem 0;
-            overflow-x: auto;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .nav-tabs button {
-            padding: 0.75rem 1.5rem;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--text-light);
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid var(--border);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--matcha-dark);
+            margin-bottom: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
         }
 
-        .nav-tabs button.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+        .nav-item:hover {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
         }
 
-        .nav-tabs button:hover {
-            color: var(--primary);
+        .nav-item.active {
+            background-color: var(--matcha-light);
+            color: var(--matcha-dark);
+            font-weight: 600;
         }
 
-        .tab-content {
+        /* Main Content Styling */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            background-color: var(--bg-gray);
+        }
+
+        .view-section {
             display: none;
-        }
-
-        .tab-content.active {
-            display: block;
             animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .view-section.active {
+            display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 24px; color: var(--text-dark); }
+        h2 { font-size: 1.2rem; margin-bottom: 16px; color: var(--matcha-dark); border-bottom: 2px solid var(--matcha-light); padding-bottom: 8px;}
+
+        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--bg-white);
+            padding: 24px;
             border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .card:hover {
-            box-shadow: 0 4px 12px rgba(107, 168, 125, 0.15);
-            transform: translateY(-2px);
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
         }
 
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--matcha-main);
+            cursor: pointer;
         }
 
-        .card ul {
-            list-style: none;
-        }
-
-        .card li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .card li:last-child {
-            border-bottom: none;
-        }
-
-        .table-container {
+        /* Tables */
+        .table-wrapper {
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
             overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--card-bg);
+            text-align: left;
         }
 
-        thead {
-            background-color: var(--primary-light);
-            color: var(--text);
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
         }
 
         th {
-            padding: 1rem;
-            text-align: left;
+            background-color: var(--matcha-light);
+            color: var(--matcha-dark);
             font-weight: 600;
-            border-bottom: 2px solid var(--border);
         }
 
-        td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        tbody tr:hover {
-            background-color: var(--bg);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
+        .badge {
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .status-idea { background-color: #E8F5E9; color: #2E7D32; }
-        .status-script { background-color: #FFF3E0; color: #E65100; }
-        .status-shooting { background-color: #E3F2FD; color: #1565C0; }
-        .status-editing { background-color: #FCE4EC; color: #C2185B; }
-        .status-caption { background-color: #F3E5F5; color: #6A1B9A; }
-        .status-scheduled { background-color: #FFF9C4; color: #F57F17; }
-        .status-uploaded { background-color: #C8E6C9; color: #1B5E20; }
-        .status-evaluated { background-color: #BBDEFB; color: #0D47A1; }
-
-        .input-group {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .input-group input,
-        .input-group select {
-            flex: 1;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-
-        .input-group button {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            font-size: 0.8rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            display: inline-block;
         }
 
-        .input-group button:hover {
-            background-color: var(--primary-dark);
+        .badge.idea { background: #f3f4f6; color: #4b5563; }
+        .badge.shooting { background: #fee2e2; color: #991b1b; }
+        .badge.editing { background: #fef3c7; color: #92400e; }
+        .badge.uploaded { background: var(--matcha-light); color: var(--matcha-dark); }
+
+        /* Kanban Board */
+        .kanban-board {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
         }
 
-        .board-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+        .kanban-col {
+            background: #f3f4f6;
+            min-width: 260px;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .board-column {
-            background: var(--bg);
-            border-radius: 12px;
-            padding: 1rem;
-            min-height: 400px;
-            border: 2px dashed var(--border);
+        .kanban-col-title {
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .board-column h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .board-item {
-            background: var(--card-bg);
-            padding: 1rem;
-            margin-bottom: 0.75rem;
+        .kanban-card {
+            background: var(--bg-white);
+            padding: 16px;
             border-radius: 8px;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-
-        .board-item small {
-            color: var(--text-light);
-            display: block;
-            margin-top: 0.5rem;
-        }
-
-        .btn-delete {
-            background-color: #EF5350;
-            color: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .btn-delete:hover {
-            background-color: #E53935;
-        }
-
-        .idea-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .idea-card {
-            background: var(--card-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .stat-card h4 {
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
+            cursor: pointer;
         }
 
-        .stat-card .number {
-            font-size: 2rem;
-            font-weight: 700;
+        /* Library Grid */
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
         }
 
+        .folder {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .folder:hover {
+            border-color: var(--matcha-main);
+            background: var(--matcha-light);
+        }
+
+        .folder-icon { font-size: 2rem; margin-bottom: 8px; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+            body { flex-direction: column; }
+            .sidebar { width: 100%; padding: 12px; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--border); }
+            .brand { width: 100%; margin-bottom: 12px; }
+            .nav-item { font-size: 0.85rem; padding: 6px 10px; }
+            .main-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🌿 MATCHA.GO CONTENT OS</h1>
-        <p>Platform Manajemen Konten All-in-One</p>
-    </header>
 
-    <div class="container">
-        <div class="nav-tabs">
-            <button class="nav-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
-            <button class="nav-btn" onclick="showTab('calendar')">🗓️ Calendar</button>
-            <button class="nav-btn" onclick="showTab('braindump')">💡 Brain Dump</button>
-            <button class="nav-btn" onclick="showTab('production')">🎬 Production</button>
-            <button class="nav-btn" onclick="showTab('analytics')">📈 Analytics</button>
-            <button class="nav-btn" onclick="showTab('library')">📁 Library</button>
-            <button class="nav-btn" onclick="showTab('campaign')">🎯 Campaign</button>
-            <button class="nav-btn" onclick="showTab('sop')">📝 SOP</button>
-        </div>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="brand">🌿 MACHA.GO OS</div>
+        <div class="nav-item active" data-target="dashboard">🏡 Dashboard HQ</div>
+        <div class="nav-item" data-target="calendar">🗓️ Content Calendar</div>
+        <div class="nav-item" data-target="braindump">💡 Brain Dump</div>
+        <div class="nav-item" data-target="board">🎬 Production Board</div>
+        <div class="nav-item" data-target="analytics">📊 Analytics</div>
+        <div class="nav-item" data-target="library">📁 Content Library</div>
+        <div class="nav-item" data-target="campaign">🎯 Campaign</div>
+        <div class="nav-item" data-target="sop">📝 SOP & Formula</div>
+    </nav>
 
-        <!-- DASHBOARD -->
-        <div id="dashboard" class="tab-content active">
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- 1. DASHBOARD HQ -->
+        <section id="dashboard" class="view-section active">
+            <h1>🌿 Matcha.Go Content HQ</h1>
             <div class="dashboard-grid">
                 <div class="card">
-                    <h3>📈 Goal Bulan Ini</h3>
-                    <ul>
-                        <li>☐ Upload 30 Video</li>
-                        <li>☐ 500 Followers Baru</li>
-                        <li>☐ 100K Views</li>
-                        <li>☐ 10 Video >2K Views</li>
-                    </ul>
+                    <h2>📈 Goal Bulan Ini</h2>
+                    <label class="checklist-item"><input type="checkbox"> Upload 30 Video</label>
+                    <label class="checklist-item"><input type="checkbox"> 500 Followers Baru</label>
+                    <label class="checklist-item"><input type="checkbox"> 100K Views</label>
+                    <label class="checklist-item"><input type="checkbox"> 10 Video >2K Views</label>
                 </div>
-
                 <div class="card">
-                    <h3>📅 Today's Task</h3>
-                    <ul>
-                        <li>🎥 Shoot Day 03</li>
-                        <li>✂ Edit Day 02</li>
-                        <li>📝 Caption Day 02</li>
-                        <li>📤 Upload 18.30</li>
-                    </ul>
+                    <h2>📅 Today's Task</h2>
+                    <label class="checklist-item"><input type="checkbox"> 🎥 Shoot Day 03</label>
+                    <label class="checklist-item"><input type="checkbox"> ✂ Edit Day 02</label>
+                    <label class="checklist-item"><input type="checkbox"> 📝 Caption Day 02</label>
+                    <label class="checklist-item"><input type="checkbox"> 📤 Upload 18.30</label>
                 </div>
-
                 <div class="card">
-                    <h3>📌 Next Upload</h3>
-                    <ul>
-                        <li>Morning Routine</li>
-                        <li>POV Mahasiswa</li>
-                        <li>Matcha Myth</li>
-                    </ul>
+                    <h2>📌 Next Upload</h2>
+                    <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">Morning Routine</p>
+                    <span class="badge editing">Status: Editing</span>
                 </div>
-
                 <div class="card">
-                    <h3>🔥 Best Performing</h3>
-                    <ul>
-                        <li>Day in My Life (3.4K)</li>
-                        <li>Morning Routine (2.8K)</li>
-                        <li>Home Cafe (2.1K)</li>
-                    </ul>
+                    <h2>🔥 Best Performing</h2>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Day in My Life</p>
+                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-top: 4px;">45K Views • 320 Saves</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- CALENDAR -->
-        <div id="calendar" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">🗓️ Content Calendar</h2>
-            <div class="table-container">
+        <!-- 2. CONTENT CALENDAR -->
+        <section id="calendar" class="view-section">
+            <h1>🗓️ Content Calendar</h1>
+            <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>Judul</th>
+                            <th>Judul Konten</th>
                             <th>Status</th>
+                            <th>Pilar Konten</th>
                             <th>Platform</th>
-                            <th>Deadline</th>
-                            <th>Views</th>
+                            <th>Upload Date</th>
+                            <th>Objective</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Morning Routine</td>
-                            <td><span class="status-badge status-uploaded">✅ Uploaded</span></td>
-                            <td>TikTok, Reels</td>
-                            <td>01 Jul 2026</td>
-                            <td>3.4K</td>
+                            <td>Morning Routine Barista</td>
+                            <td><span class="badge editing">✂ Editing</span></td>
+                            <td>Aesthetic / VLOG</td>
+                            <td>Tiktok, Reels</td>
+                            <td>12 Jul 2026</td>
+                            <td>Engagement</td>
                         </tr>
                         <tr>
-                            <td>Matcha Myth</td>
-                            <td><span class="status-badge status-editing">✂ Editing</span></td>
-                            <td>TikTok</td>
-                            <td>02 Jul 2026</td>
-                            <td>-</td>
+                            <td>Matcha Myth #1</td>
+                            <td><span class="badge shooting">🎥 Shooting</span></td>
+                            <td>Edukasi</td>
+                            <td>Tiktok</td>
+                            <td>14 Jul 2026</td>
+                            <td>Share & Save</td>
                         </tr>
                         <tr>
-                            <td>Customer Story</td>
-                            <td><span class="status-badge status-script">✍ Script</span></td>
-                            <td>Reels, YouTube</td>
-                            <td>03 Jul 2026</td>
-                            <td>-</td>
+                            <td>Packing ASMR (Order 50 Pcs)</td>
+                            <td><span class="badge uploaded">✅ Uploaded</span></td>
+                            <td>Behind the Scene</td>
+                            <td>Reels</td>
+                            <td>10 Jul 2026</td>
+                            <td>Soft Selling</td>
+                        </tr>
+                        <tr>
+                            <td>POV Mahasiswa Nugas</td>
+                            <td><span class="badge idea">🧠 Idea</span></td>
+                            <td>Relatable</td>
+                            <td>Tiktok</td>
+                            <td>TBD</td>
+                            <td>Traffic</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
-        <!-- BRAIN DUMP -->
-        <div id="braindump" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">💡 Content Ideas</h2>
-            <div class="idea-list">
-                <div class="idea-card">💡 POV Mahasiswa</div>
-                <div class="idea-card">💡 Morning Routine</div>
-                <div class="idea-card">💡 Matcha Myth</div>
-                <div class="idea-card">💡 Customer Story</div>
-                <div class="idea-card">💡 Packing ASMR</div>
-                <div class="idea-card">💡 Home Cafe</div>
-                <div class="idea-card">💡 Healthy Lifestyle</div>
-                <div class="idea-card">💡 Freelancer Life</div>
-                <div class="idea-card">💡 Weekend Reset</div>
-            </div>
-        </div>
-
-        <!-- PRODUCTION -->
-        <div id="production" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">🎬 Production Board</h2>
-            <div class="board-container">
-                <div class="board-column">
-                    <h3>📌 To Shoot</h3>
-                    <div class="board-item">Day in My Life <small>Deadline: 03 Jul</small></div>
-                    <div class="board-item">POV Freelancer <small>Deadline: 05 Jul</small></div>
-                </div>
-                <div class="board-column">
-                    <h3>🎥 Shot</h3>
-                    <div class="board-item">Morning Routine <small>Done: 01 Jul</small></div>
-                    <div class="board-item">Home Cafe <small>Done: 02 Jul</small></div>
-                </div>
-                <div class="board-column">
-                    <h3>✂ Editing</h3>
-                    <div class="board-item">Matcha Myth <small>Progress: 60%</small></div>
-                    <div class="board-item">Customer Story <small>Progress: 30%</small></div>
-                </div>
-                <div class="board-column">
-                    <h3>Review</h3>
-                    <div class="board-item">Packing ASMR <small>Review: Pending</small></div>
-                </div>
-                <div class="board-column">
-                    <h3>✅ Done</h3>
-                    <div class="board-item">Morning Routine <small>Uploaded: 01 Jul</small></div>
+        <!-- 3. BRAIN DUMP -->
+        <section id="braindump" class="view-section">
+            <h1>💡 Content Brain Dump</h1>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+                        <li class="checklist-item">📌 POV Mahasiswa</li>
+                        <li class="checklist-item">📌 Morning Routine</li>
+                        <li class="checklist-item">📌 Matcha Myth</li>
+                        <li class="checklist-item">📌 Customer Story</li>
+                        <li class="checklist-item">📌 Packing ASMR</li>
+                        <li class="checklist-item">📌 Home Cafe</li>
+                        <li class="checklist-item">📌 Healthy Lifestyle</li>
+                        <li class="checklist-item">📌 Freelancer Life</li>
+                        <li class="checklist-item">📌 Weekend Reset</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ANALYTICS -->
-        <div id="analytics" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">📊 Analytics</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h4>Total Views</h4>
-                    <div class="number">28.5K</div>
+        <!-- 4. PRODUCTION BOARD -->
+        <section id="board" class="view-section">
+            <h1>🎬 Production Board</h1>
+            <div class="kanban-board">
+                <div class="kanban-col">
+                    <div class="kanban-col-title">📌 To Shoot <span>2</span></div>
+                    <div class="kanban-card">Matcha Myth #1<br><small style="color: gray;">Edukasi</small></div>
+                    <div class="kanban-card">Freelancer Life<br><small style="color: gray;">Vlog</small></div>
                 </div>
-                <div class="stat-card">
-                    <h4>Total Followers</h4>
-                    <div class="number">2.3K</div>
+                <div class="kanban-col">
+                    <div class="kanban-col-title">🎥 Shot <span>1</span></div>
+                    <div class="kanban-card">POV Mahasiswa<br><small style="color: gray;">Relatable</small></div>
                 </div>
-                <div class="stat-card">
-                    <h4>Avg Engagement</h4>
-                    <div class="number">8.5%</div>
+                <div class="kanban-col">
+                    <div class="kanban-col-title">✂ Editing <span>1</span></div>
+                    <div class="kanban-card">Morning Routine Barista<br><small style="color: gray;">Aesthetic</small></div>
                 </div>
-                <div class="stat-card">
-                    <h4>Video Uploaded</h4>
-                    <div class="number">12</div>
+                <div class="kanban-col">
+                    <div class="kanban-col-title">🔍 Review <span>0</span></div>
+                </div>
+                <div class="kanban-col">
+                    <div class="kanban-col-title">✅ Done <span>1</span></div>
+                    <div class="kanban-card">Packing ASMR<br><small style="color: gray;">BTS</small></div>
                 </div>
             </div>
+        </section>
 
-            <h3 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">Video Performance</h3>
-            <div class="table-container">
+        <!-- 5. ANALYTICS -->
+        <section id="analytics" class="view-section">
+            <h1>📊 Analytics Dashboard</h1>
+            <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
                             <th>Judul</th>
                             <th>Views</th>
-                            <th>Likes</th>
+                            <th>Watch Time</th>
                             <th>Share</th>
                             <th>Save</th>
+                            <th>Follow</th>
+                            <th>Hook Nilai</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Morning Routine</td>
-                            <td>3.4K</td>
-                            <td>420</td>
+                            <td>3.400</td>
+                            <td>12s</td>
                             <td>80</td>
                             <td>210</td>
+                            <td>40</td>
+                            <td>8/10</td>
                         </tr>
                         <tr>
-                            <td>Day in My Life</td>
-                            <td>2.8K</td>
-                            <td>380</td>
-                            <td>65</td>
-                            <td>190</td>
-                        </tr>
-                        <tr>
-                            <td>Home Cafe</td>
-                            <td>2.1K</td>
-                            <td>310</td>
-                            <td>50</td>
+                            <td>Packing ASMR</td>
+                            <td>15.200</td>
+                            <td>24s</td>
                             <td>150</td>
+                            <td>450</td>
+                            <td>120</td>
+                            <td>9/10</td>
+                        </tr>
+                        <tr>
+                            <td>Healthy Lifestyle</td>
+                            <td>1.200</td>
+                            <td>8s</td>
+                            <td>12</td>
+                            <td>30</td>
+                            <td>5</td>
+                            <td>6/10</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
-        <!-- LIBRARY -->
-        <div id="library" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">📁 Content Library</h2>
-            <div class="dashboard-grid">
-                <div class="card">
-                    <h3>🌿 Matcha Pour</h3>
-                    <p>12 file</p>
-                </div>
-                <div class="card">
-                    <h3>🌿 Whisk</h3>
-                    <p>8 file</p>
-                </div>
-                <div class="card">
-                    <h3>🌿 Milk Pour</h3>
-                    <p>10 file</p>
-                </div>
-                <div class="card">
-                    <h3>🌿 Packing</h3>
-                    <p>15 file</p>
-                </div>
-                <div class="card">
-                    <h3>📱 Laptop</h3>
-                    <p>7 file</p>
-                </div>
-                <div class="card">
-                    <h3>☕ Cafe</h3>
-                    <p>14 file</p>
-                </div>
+        <!-- 6. CONTENT LIBRARY -->
+        <section id="library" class="view-section">
+            <h1>📁 Content Library (Footage)</h1>
+            <div class="library-grid">
+                <div class="folder"><div class="folder-icon">🌿</div>Matcha Pour</div>
+                <div class="folder"><div class="folder-icon">🍵</div>Whisk</div>
+                <div class="folder"><div class="folder-icon">🥛</div>Milk Pour</div>
+                <div class="folder"><div class="folder-icon">📦</div>Packing</div>
+                <div class="folder"><div class="folder-icon">💻</div>Laptop</div>
+                <div class="folder"><div class="folder-icon">📒</div>Planner</div>
+                <div class="folder"><div class="folder-icon">🪑</div>Cafe</div>
+                <div class="folder"><div class="folder-icon">🎬</div>B-roll</div>
             </div>
-        </div>
+        </section>
 
-        <!-- CAMPAIGN -->
-        <div id="campaign" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">🎯 Campaign & Launch</h2>
+        <!-- 7. CAMPAIGN -->
+        <section id="campaign" class="view-section">
+            <h1>🎯 Campaign & Launch</h1>
             <div class="dashboard-grid">
-                <div class="card">
-                    <h3>🎉 Launching Menu Baru</h3>
-                    <ul>
-                        <li>📅 Tanggal: 15 Juli 2026</li>
-                        <li>🎥 Content: 10 video</li>
-                        <li>📊 Target Views: 50K</li>
-                        <li>🏆 Status: Planning</li>
-                    </ul>
+                <div class="card" style="border-top: 4px solid var(--matcha-main);">
+                    <h2>🚀 Launching Menu Baru</h2>
+                    <p style="color: var(--text-gray); font-size: 0.9rem;">Target: Agustus 2026</p>
                 </div>
-                <div class="card">
-                    <h3>🎓 Workshop</h3>
-                    <ul>
-                        <li>📅 Tanggal: 22 Juli 2026</li>
-                        <li>🎥 Content: Behind the scenes</li>
-                        <li>📊 Target: 100 peserta</li>
-                        <li>🏆 Status: Preparing</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🌙 Ramadhan</h3>
-                    <ul>
-                        <li>📅 Periode: 8 hari</li>
-                        <li>🎥 Content: 3x/hari</li>
-                        <li>📊 Target: Viral moment</li>
-                        <li>🏆 Status: Planning</li>
-                    </ul>
-                </div>
+                <div class="card"><h2>🎓 Back to School</h2></div>
+                <div class="card"><h2>🇲🇨 17 Agustus</h2></div>
+                <div class="card"><h2>🍵 Hari Matcha</h2></div>
+                <div class="card"><h2>🎤 Workshop Offline</h2></div>
             </div>
-        </div>
+        </section>
 
-        <!-- SOP -->
-        <div id="sop" class="tab-content">
-            <h2 style="color: var(--primary); margin-bottom: 1rem;">📝 SOP & Checklist</h2>
+        <!-- 8. SOP & FORMULA -->
+        <section id="sop" class="view-section">
+            <h1>📝 SOP, Formula & Scorecard</h1>
             <div class="dashboard-grid">
+                
+                <!-- Checklist SOP -->
                 <div class="card">
-                    <h3>✅ Checklist Upload</h3>
-                    <ul>
-                        <li>☐ Hook kuat</li>
-                        <li>☐ Subtitle</li>
-                        <li>☐ Cover</li>
-                        <li>☐ CTA jelas</li>
-                        <li>☐ Hashtag relevan</li>
-                        <li>☐ SEO optimized</li>
-                    </ul>
+                    <h2>✅ Checklist Sebelum Upload</h2>
+                    <label class="checklist-item"><input type="checkbox"> Hook di 3 detik pertama kuat</label>
+                    <label class="checklist-item"><input type="checkbox"> Subtitle / Text On Screen</label>
+                    <label class="checklist-item"><input type="checkbox"> Cover / Thumbnail menarik</label>
+                    <label class="checklist-item"><input type="checkbox"> Call To Action (CTA) jelas</label>
+                    <label class="checklist-item"><input type="checkbox"> Hashtag relevan</label>
+                    <label class="checklist-item"><input type="checkbox"> SEO Keywords di caption</label>
+                    <label class="checklist-item"><input type="checkbox"> Pin Comment</label>
+                    <label class="checklist-item"><input type="checkbox"> Reply Comment awal</label>
                 </div>
-                <div class="card">
-                    <h3>🎥 Shooting Guidelines</h3>
-                    <ul>
-                        <li>✅ 3 angle per scene</li>
-                        <li>✅ Close-up detail</li>
-                        <li>✅ Wide shot context</li>
-                        <li>✅ Good lighting</li>
-                        <li>✅ Audio clear</li>
-                        <li>✅ Backup file</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>✂️ Editing Tips</h3>
-                    <ul>
-                        <li>✅ Fast pacing</li>
-                        <li>✅ Music trending</li>
-                        <li>✅ Color grade</li>
-                        <li>✅ Text readable</li>
-                        <li>✅ Smooth transition</li>
-                        <li>✅ Export 1080p</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
+                <!-- Score Card -->
+                <div class="card">
+                    <h2>🏆 Content Score Card</h2>
+                    <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 16px;">Evaluasi kualitas video setelah di-upload (Bukan feeling, tapi data).</p>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Hook</span> <span style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Retention</span> <span style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Visual</span> <span style="color: #FBBF24;">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Story</span> <span style="color: #FBBF24;">⭐⭐⭐☆☆</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>CTA</span> <span style="color: #FBBF24;">⭐⭐⭐⭐☆</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Content Formula Table -->
+            <h2 style="margin-top: 32px;">🧠 Content Formula Tracker</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hook Style</th>
+                            <th>Dipakai (x)</th>
+                            <th>Average Views</th>
+                            <th>Status Formula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>"Nobody sees this..."</td>
+                            <td>12x</td>
+                            <td>28.000</td>
+                            <td><span class="badge uploaded">🔥 Gacor</span></td>
+                        </tr>
+                        <tr>
+                            <td>"POV: [Situation]"</td>
+                            <td>8x</td>
+                            <td>35.000</td>
+                            <td><span class="badge uploaded">🔥 Gacor</span></td>
+                        </tr>
+                        <tr>
+                            <td>"Things I wish I knew..."</td>
+                            <td>5x</td>
+                            <td>17.000</td>
+                            <td><span class="badge idea">Stabil</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript for Navigation -->
     <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.nav-btn');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
+        const navItems = document.querySelectorAll('.nav-item');
+        const viewSections = document.querySelectorAll('.view-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all nav items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                
+                // Add active class to clicked nav item
+                item.classList.add('active');
+                
+                // Hide all sections
+                viewSections.forEach(section => section.classList.remove('active'));
+                
+                // Show targeted section
+                const targetId = item.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
